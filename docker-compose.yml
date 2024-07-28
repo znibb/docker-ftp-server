@@ -1,0 +1,10 @@
+services:
+  ftp:
+    image: delfer/alpine-ftp-server:latest
+    container_name: ftp-server
+    restart: unless-stopped
+    environment:
+      USERS: ${FTP_USER:?}|${FTP_PASS:?}|/home/${FTP_USER:?}|${FTP_UID:?}|${FTP_GID:?}
+    network_mode: host
+    volumes:
+      - ${TARGET_DIR:-./uploads}:/home/${FTP_USER:?}
